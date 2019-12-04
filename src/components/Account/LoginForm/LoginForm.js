@@ -3,7 +3,7 @@ import { Grid, Header, Image, Message, Segment, Container, Button, Form, Input }
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import { authenticationService } from '../../services/authenticationService';
+import { authenticationService } from '../../../services/authenticationService';
 
 export const LoginForm = (props) => {
     const formik = useFormik({
@@ -73,7 +73,10 @@ export const LoginForm = (props) => {
                       </Segment>
                     </Form>
                     <Message>
-                        Not registered yet? <Link to="/signup">Sign Up</Link>
+                        Not registered yet? <Link to="/account/signup">Sign Up</Link>
+                    </Message>
+                    <Message>
+                        Forgotten Password? <Link to="/account/password/forgotten">Click here</Link>
                     </Message>
                 </Grid.Column>
             </Grid>

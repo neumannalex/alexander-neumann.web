@@ -14,6 +14,7 @@ import {
   Segment,
   Sidebar,
   Visibility,
+  Popup
 } from 'semantic-ui-react';
 import { Link, NavLink, useHistory } from 'react-router-dom';
 import { authenticationService } from './services/authenticationService';
@@ -29,35 +30,54 @@ const getWidth = () => {
 }
 
 const LoginSigninMenu = () => {
-  const [currentUser, setCurrentUser] = useState();
+  //const [currentUser, setCurrentUser] = useState();
+  const [currentUsername, setCurrentUsername] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   let history = useHistory();
 
   useEffect(() => {
     authenticationService.currentUser.subscribe(user => {
-      setCurrentUser(user)
+      //setCurrentUser(user);
+      var username = authenticationService.getCurrentUsername();
+      var loggedIn = authenticationService.isLoggedIn();
+      //var atok = authenticationService.getCurrentAccessToken();
+      //var rtok = authenticationService.getCurrentRefreshToken()
+      //setCurrentAccessToken(atok);
+      //setCurrentRefreshToken(rtok);
+
+      setIsLoggedIn(loggedIn);
+      setCurrentUsername(username);
+
+      // console.log('isLoggedIn', isLoggedIn);
+      // console.log('currentAccessToken', currentAccessToken);
+      // console.log('currentRefreshToken', currentRefreshToken);
     });
   });
 
   const logout = () =>{
     authenticationService.logout();
-    history.push('/login');
+    history.push('/account/login');
   }
 
   return(
     <Menu.Menu position='right'>
-      {currentUser &&
+      {isLoggedIn &&
         <Menu.Item>
-          <Button as={Link} to="/profile" circular icon="user" color="blue" />
+          <Popup trigger={
+            <Button as={Link} to="/profile" circular icon="user" color="blue" />
+          }>
+            <Popup.Content>{currentUsername}</Popup.Content>
+          </Popup>
         </Menu.Item>
       }
-      {currentUser &&
+      {isLoggedIn &&
         <Menu.Item>
           <Button as="a" onClick={logout} inverted>Log out</Button>
         </Menu.Item>
       }
-      {!currentUser &&
+      {!isLoggedIn &&
         <Menu.Item>
-          <Button as={Link} to="/login" inverted>Log in</Button>
+          <Button as={Link} to="/account/login" inverted>Log in</Button>
         </Menu.Item>
       }
     </Menu.Menu>

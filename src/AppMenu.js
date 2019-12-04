@@ -41,12 +41,15 @@ export const AppMenu = () => {
   return (
     <Container>
       <Menu.Item as={Link} to='/' header>
-          <Image size="mini" src="/myLogo192.png" style={{ marginRight: "1.5em" }} />
+          {/* <Image size="mini" src="/myLogo192.png" style={{ marginRight: "1.5em" }} /> */}
           alexander-neumann.net
       </Menu.Item>
       <Menu.Item as={NavLink} to='/home' activeClassName="active">Home</Menu.Item>
       {isMember &&
       <Menu.Item as={NavLink} to='/gallery' activeClassName="active">Gallery</Menu.Item>
+      }
+      {isMember &&
+      <Menu.Item as={NavLink} to='/values' activeClassName="active">Values</Menu.Item>
       }
       {isAdmin &&
       <Dropdown item text='Admin'>

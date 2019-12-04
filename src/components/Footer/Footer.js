@@ -27,23 +27,23 @@ export const Footer = (props) => {
     >
       <Container textAlign="center">
         {/* <Divider inverted section /> */}
-        <Image centered size="mini" src="/myLogo192.png" />
+        {/* <Image centered size="mini" src="/myLogo192.png" /> */}
         <List horizontal inverted divided link size="small">
-          <List.Item as="a" href="#root">
+          {/* <List.Item as="a" href="#root">
             Site Map
-          </List.Item>
+          </List.Item> */}
           <List.Item as="a" href="#root">
             Contact Us
           </List.Item>
-          <List.Item as="a" href="#root">
+          {/* <List.Item as="a" href="#root">
             Terms and Conditions
-          </List.Item>
+          </List.Item> */}
           <List.Item as={Link} to="/privacy">
             Privacy Policy
           </List.Item>
-          <List.Item>
+          {/* <List.Item>
             <Counter />
-          </List.Item>
+          </List.Item> */}
         </List>
       </Container>
     </Segment>

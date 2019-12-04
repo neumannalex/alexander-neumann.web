@@ -1,7 +1,11 @@
+import './config';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
+import config from 'react-global-configuration';
 import 'semantic-ui-css/semantic.min.css';
 //import './index.css';
+//import authAxios from './helpers/authAxios';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 

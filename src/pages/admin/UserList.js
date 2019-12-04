@@ -14,11 +14,17 @@ import {
   Table,
   Button,
   Confirm,
-  Modal
+  Modal,
+  Label
 } from "semantic-ui-react";
 import axios from 'axios';
+import authAxios from '../../helpers/authAxios';
 import _ from 'lodash';
 import {UserDetails} from './UserDetails';
+import config from 'react-global-configuration';
+
+const API_DOMAIN = config.get('apiDomain');
+
 
 
 export const UserList = () => {
@@ -62,10 +68,16 @@ export const UserList = () => {
   }
 
   useEffect(() => {
-      axios.get('https://jsonplaceholder.typicode.com/users')
+      // axios.get('https://jsonplaceholder.typicode.com/users')
+      //     .then(reply => {
+      //       const users = reply.data;
+      //       setUsers(users);
+      //     })
+      authAxios.get(`${API_DOMAIN}/api/users`)
           .then(reply => {
             const users = reply.data;
             setUsers(users);
+            console.log('users', users);
           })
   }, []);
 
@@ -77,7 +89,7 @@ export const UserList = () => {
         open={showDeleteConfirm}
         onConfirm={onConfirmDelete}
         onCancel={onCancelDelete}
-        content={currentItem === null ? 'Are you shure?' : 'Do you really want to delete the user \'' + currentItem.username + '\'?'}
+        content={currentItem === null ? 'Are you sure?' : 'Do you really want to delete the user \'' + currentItem.username + '\'?'}
       />
       
       {/* <UserDetails user={currentItem} mode={detailsMode} open={showDetails} />   */}
@@ -85,12 +97,12 @@ export const UserList = () => {
       <Table celled>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell
+            {/* <Table.HeaderCell
               sorted={sortColumn === 'id' ? sortDirection : null}
               onClick={handleSort('id')}
             >
               Id
-            </Table.HeaderCell>
+            </Table.HeaderCell> */}
             <Table.HeaderCell
               sorted={sortColumn === 'username' ? sortDirection : null}
               onClick={handleSort('username')}
@@ -104,6 +116,9 @@ export const UserList = () => {
               Email
             </Table.HeaderCell>
             <Table.HeaderCell>
+              Roles
+            </Table.HeaderCell>
+            <Table.HeaderCell>
               Actions
             </Table.HeaderCell>
           </Table.Row>
@@ -112,9 +127,14 @@ export const UserList = () => {
           {
             users.map((user, index) =>
               <Table.Row key={index}>
-                <Table.Cell>{user.id}</Table.Cell>
+                {/* <Table.Cell>{user.id}</Table.Cell> */}
                 <Table.Cell>{user.username}</Table.Cell>
                 <Table.Cell>{user.email}</Table.Cell>
+                <Table.Cell>
+                  {
+                    user.roles.map((role, index) => <Label key={index} size="mini">{role}</Label> )
+                  }
+                </Table.Cell>
                 <Table.Cell>
                   <UserDetails user={user} mode='view' trigger={
                     <Icon link name='search'/>
